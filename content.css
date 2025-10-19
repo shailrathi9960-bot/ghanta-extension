@@ -1,7 +1,5 @@
-#color-scanner-container {
+.draggable-container {
   position: fixed;
-  top: 100px;
-  left: 100px;
   background-color: white;
   border: 1px solid black;
   z-index: 9999;
@@ -9,7 +7,17 @@
   user-select: none;
 }
 
-#drag-handle {
+#color-scanner-container {
+  top: 100px;
+  left: 100px;
+}
+
+#action-buttons-container {
+  top: 100px;
+  left: 200px;
+}
+
+.drag-handle {
   cursor: move;
   background-color: #f1f1f1;
   text-align: center;
@@ -28,5 +36,7 @@
 }
 
 #action-buttons {
-  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }

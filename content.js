@@ -1,55 +1,70 @@
 (async () => {
   // 1. Inject HTML and CSS
-  const container = document.createElement('div');
-  container.innerHTML = await fetch(chrome.runtime.getURL('content.html')).then(r => r.text());
-  document.body.appendChild(container);
+  const response = await fetch(chrome.runtime.getURL('content.html'));
+  const html = await response.text();
+  document.body.insertAdjacentHTML('beforeend', html);
 
   const style = document.createElement('link');
   style.rel = 'stylesheet';
   style.href = chrome.runtime.getURL('content.css');
   document.head.appendChild(style);
 
-  // 2. Make the UI draggable
-  const dragHandle = document.getElementById('drag-handle');
-  const containerElement = document.getElementById('color-scanner-container');
-  let isDragging = false;
-  let offsetX, offsetY;
+  // 2. Make the UIs draggable
+  function makeDraggable() {
+    let activeElement = null;
+    let offsetX, offsetY;
 
-  dragHandle.addEventListener('mousedown', (e) => {
-    isDragging = true;
-    offsetX = e.clientX - containerElement.offsetLeft;
-    offsetY = e.clientY - containerElement.offsetTop;
-  });
+    const onMouseDown = (e) => {
+      if (e.target.classList.contains('drag-handle')) {
+        activeElement = e.target.closest('.draggable-container');
+        if (activeElement) {
+          e.preventDefault();
+          offsetX = e.clientX - activeElement.offsetLeft;
+          offsetY = e.clientY - activeElement.offsetTop;
+          document.addEventListener('mousemove', onMouseMove);
+          document.addEventListener('mouseup', onMouseUp);
+        }
+      }
+    };
 
-  document.addEventListener('mousemove', (e) => {
-    if (isDragging) {
-      containerElement.style.left = `${e.clientX - offsetX}px`;
-      containerElement.style.top = `${e.clientY - offsetY}px`;
-    }
-  });
+    const onMouseMove = (e) => {
+      if (activeElement) {
+        e.preventDefault();
+        activeElement.style.left = `${e.clientX - offsetX}px`;
+        activeElement.style.top = `${e.clientY - offsetY}px`;
+      }
+    };
 
-  document.addEventListener('mouseup', () => {
-    isDragging = false;
-  });
+    const onMouseUp = (e) => {
+        if (activeElement) {
+            e.preventDefault();
+            document.removeEventListener('mousemove', onMouseMove);
+            document.removeEventListener('mouseup', onMouseUp);
+            activeElement = null;
+        }
+    };
+
+    document.addEventListener('mousedown', onMouseDown);
+  }
+
+  makeDraggable();
 
   // 3. Color scanning and button trigger logic
   const table = document.getElementById('color-scanner-table');
   const rows = table.getElementsByTagName('tr');
-  const button1 = document.getElementById('action-button-1');
-  const button2 = document.getElementById('action-button-2');
   let triggered = false;
 
   function scanColors() {
     let greenRowCount = 0;
-    const elementsToScan = document.querySelectorAll('div'); // Scan all divs
+    // Targeting the bet history list from the screenshot
+    const elementsToScan = document.querySelectorAll('.bet-list-item');
 
     for (let i = 0; i < rows.length; i++) {
       if (i < elementsToScan.length) {
         const computedStyle = window.getComputedStyle(elementsToScan[i]);
         const bgColor = computedStyle.backgroundColor;
 
-        // Check for shades of green
-        if (bgColor.startsWith('rgb(144, 238, 144)') || bgColor === 'lightgreen' || bgColor === 'green' || bgColor.startsWith('rgb(0, 128, 0)')) {
+        if (bgColor.startsWith('rgb(44, 182, 103)')) { // Green color from the screenshot
           rows[i].style.backgroundColor = 'lightgreen';
           greenRowCount++;
         } else {
@@ -60,17 +75,18 @@
 
     if (greenRowCount >= 3 && !triggered) {
       triggerActions();
-      triggered = true; // Ensure it only triggers once
+      triggered = true;
+    } else if (greenRowCount < 3 && triggered) {
+      triggered = false; // Reset the trigger
     }
   }
 
   function triggerActions() {
-    button1.style.backgroundColor = 'red';
-    button1.textContent = 'Triggered!';
-    button2.style.backgroundColor = 'red';
-    button2.textContent = 'Triggered!';
-    console.log('Actions triggered!');
+    // Targeting the bet buttons from the screenshot
+    const betButtons = document.querySelectorAll('.bet-button');
+    betButtons.forEach(button => button.click());
+    console.log('BET actions triggered!');
   }
 
-  setInterval(scanColors, 1000); // Scan every second
+  setInterval(scanColors, 1000);
 })();
