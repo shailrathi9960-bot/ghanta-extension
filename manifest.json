@@ -3,7 +3,7 @@
   "name": "Color Scan & Action",
   "version": "1.0",
   "description": "Scans for green rows and triggers actions.",
-  "permissions": ["activeTab", "scripting"],
+  "permissions": ["activeTab", "scripting", "storage"],
   "background": {
     "service_worker": "background.js"
   },

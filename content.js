@@ -49,43 +49,76 @@
 
   makeDraggable();
 
-  // 3. Color scanning and button trigger logic
+  // 3. Settings and Core Logic
   const table = document.getElementById('color-scanner-table');
   const rows = table.getElementsByTagName('tr');
+  const scanSelectorInput = document.getElementById('scan-selector');
+  const buttonSelectorInput = document.getElementById('button-selector');
+  const saveButton = document.getElementById('save-settings');
+
+  let scanSelector = '.bet-list-item';
+  let buttonSelector = '.bet-button';
   let triggered = false;
+
+  function loadSettings() {
+    const savedScanSelector = localStorage.getItem('scanSelector');
+    const savedButtonSelector = localStorage.getItem('buttonSelector');
+    if (savedScanSelector) {
+      scanSelector = savedScanSelector;
+      scanSelectorInput.value = savedScanSelector;
+    }
+    if (savedButtonSelector) {
+      buttonSelector = savedButtonSelector;
+      buttonSelectorInput.value = savedButtonSelector;
+    }
+  }
+
+  function saveSettings() {
+    scanSelector = scanSelectorInput.value;
+    buttonSelector = buttonSelectorInput.value;
+    localStorage.setItem('scanSelector', scanSelector);
+    localStorage.setItem('buttonSelector', buttonSelector);
+    alert('Settings saved!');
+  }
+
+  saveButton.addEventListener('click', saveSettings);
+  loadSettings();
 
   function scanColors() {
     let greenRowCount = 0;
-    // Targeting the bet history list from the screenshot
-    const elementsToScan = document.querySelectorAll('.bet-list-item');
-
-    for (let i = 0; i < rows.length; i++) {
-      if (i < elementsToScan.length) {
-        const computedStyle = window.getComputedStyle(elementsToScan[i]);
-        const bgColor = computedStyle.backgroundColor;
-
-        if (bgColor.startsWith('rgb(44, 182, 103)')) { // Green color from the screenshot
-          rows[i].style.backgroundColor = 'lightgreen';
-          greenRowCount++;
-        } else {
-          rows[i].style.backgroundColor = 'white';
+    try {
+      const elementsToScan = document.querySelectorAll(scanSelector);
+      for (let i = 0; i < rows.length; i++) {
+        rows[i].style.backgroundColor = 'white'; // Reset row color
+        if (i < elementsToScan.length) {
+          const computedStyle = window.getComputedStyle(elementsToScan[i]);
+          const bgColor = computedStyle.backgroundColor;
+          if (bgColor.startsWith('rgb(44, 182, 103)') || bgColor === 'lightgreen' || bgColor === 'green') {
+            rows[i].style.backgroundColor = 'lightgreen';
+            greenRowCount++;
+          }
         }
       }
+    } catch (e) {
+      // Invalid selector, do nothing
     }
 
     if (greenRowCount >= 3 && !triggered) {
       triggerActions();
       triggered = true;
     } else if (greenRowCount < 3 && triggered) {
-      triggered = false; // Reset the trigger
+      triggered = false;
     }
   }
 
   function triggerActions() {
-    // Targeting the bet buttons from the screenshot
-    const betButtons = document.querySelectorAll('.bet-button');
-    betButtons.forEach(button => button.click());
-    console.log('BET actions triggered!');
+    try {
+      const betButtons = document.querySelectorAll(buttonSelector);
+      betButtons.forEach(button => button.click());
+      console.log('BET actions triggered!');
+    } catch (e) {
+      // Invalid selector, do nothing
+    }
   }
 
   setInterval(scanColors, 1000);
