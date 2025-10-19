@@ -1,58 +1,59 @@
 .draggable-container {
   position: fixed;
-  background-color: white;
-  border: 1px solid black;
   z-index: 9999;
-  padding: 10px;
   user-select: none;
 }
 
+/* Table container */
 #color-scanner-container {
   top: 100px;
-  left: 100px;
+  left: 50px;
   background-color: transparent;
   border: none;
-  padding: 0;
 }
 
-#action-button-1-container,
-#action-button-2-container {
-  top: 100px;
-  left: 200px;
-  background-color: rgba(255, 255, 255, 0.7);
-  border-radius: 50%;
-  padding: 0;
+/* Action Button containers - now a shared class */
+.action-button-wrapper {
   width: 40px;
   height: 40px;
+  background-color: rgba(220, 220, 220, 0.5);
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid #ccc;
+  border: 1px solid #aaa;
+  cursor: move;
+}
+
+#action-button-1-container {
+  top: 100px;
+  left: 200px;
 }
 
 #action-button-2-container {
   top: 100px;
-  left: 350px;
-  width: auto;
-  height: auto;
-  border-radius: 5px;
-  padding: 10px;
+  left: 260px;
+}
+
+/* Settings container */
+#settings-container {
+    top: 200px;
+    left: 200px;
+    background-color: white;
+    border: 1px solid black;
+    padding: 10px;
 }
 
 .drag-handle {
   cursor: move;
   background-color: #f1f1f1;
   text-align: center;
-  padding: 2px;
-  font-size: 10px;
-  border-radius: 5px 5px 0 0;
+  padding: 5px;
+  margin-bottom: 10px;
+  font-size: 12px;
 }
 
-#action-button-1-container .drag-handle,
-#action-button-2-container .drag-handle {
-  display: none; /* Hide handles for minimal buttons */
-}
-
+/* Individual Action Buttons */
 #action-button-1,
 #action-button-2 {
   width: 30px;
@@ -60,10 +61,9 @@
   border-radius: 50%;
   border: 1px solid #999;
   background-color: #eee;
-  cursor: move;
 }
 
-
+/* Table styling */
 #color-scanner-table {
   border-collapse: separate;
   border-spacing: 5px;
@@ -73,6 +73,28 @@
   border: 1px solid black;
   width: 30px;
   height: 30px;
-  background-color: rgba(255, 255, 255, 0.5);
-  padding: 5px;
+  background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent cells */
+}
+
+/* Settings panel styling */
+#settings div {
+  margin-bottom: 5px;
+}
+#settings label {
+  font-size: 12px;
+}
+#settings input {
+  width: 120px;
+}
+
+#sampling-indicator {
+  position: fixed;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: yellow;
+  padding: 10px;
+  border: 1px solid black;
+  z-index: 10000;
+  font-family: sans-serif;
 }

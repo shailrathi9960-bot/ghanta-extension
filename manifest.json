@@ -1,19 +1,31 @@
 {
   "manifest_version": 3,
-  "name": "Color Scan & Action",
+  "name": "Color Scanner Extension",
   "version": "1.0",
-  "description": "Scans for green rows and triggers actions.",
-  "permissions": ["activeTab", "scripting", "storage"],
+  "description": "Scans for green elements and triggers actions.",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
   "background": {
     "service_worker": "background.js"
   },
   "action": {
-    "default_title": "Open Color Scanner"
+    "default_title": "Activate Color Scanner"
   },
   "web_accessible_resources": [
     {
-      "resources": ["content.html", "content.css"],
-      "matches": ["<all_urls>"]
+      "resources": [
+        "content.html",
+        "content.css"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
     }
   ]
 }

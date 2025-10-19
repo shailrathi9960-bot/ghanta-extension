@@ -1,5 +1,10 @@
+<!-- Draggable Table -->
 <div id="color-scanner-container" class="draggable-container">
   <div class="drag-handle">Scan Table</div>
+  <div style="padding: 5px; text-align: center;">
+    <input type="checkbox" id="activate-scan-checkbox">
+    <label for="activate-scan-checkbox" style="font-family: sans-serif; font-size: 12px;">Activate Scan</label>
+  </div>
   <table id="color-scanner-table">
     <tbody>
       <tr><td></td></tr>
@@ -16,17 +21,28 @@
   </table>
 </div>
 
-<div id="action-button-1-container" class="draggable-container">
+<!-- Draggable Action Button 1 -->
+<div id="action-button-1-container" class="draggable-container action-button-wrapper">
   <button id="action-button-1" title="Drag me to set click position"></button>
 </div>
 
-<div id="action-button-2-container" class="draggable-container">
+<!-- Draggable Action Button 2 -->
+<div id="action-button-2-container" class="draggable-container action-button-wrapper">
   <button id="action-button-2" title="Drag me to set click position"></button>
-  <hr>
+</div>
+
+<!-- Draggable Settings Panel -->
+<div id="settings-container" class="draggable-container">
+  <div class="drag-handle">Settings</div>
   <div id="settings">
     <div>
       <label for="scan-selector">Scan Selector:</label>
       <input type="text" id="scan-selector" placeholder=".bet-list-item">
+    </div>
+    <div>
+      <label for="color-sampler">Target Color:</label>
+      <button id="color-sampler">Sample Color</button>
+      <span id="color-preview"></span>
     </div>
     <button id="save-settings">Save</button>
   </div>
