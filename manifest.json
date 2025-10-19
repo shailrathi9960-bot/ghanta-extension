@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "Color Scan & Action",
+  "version": "1.0",
+  "description": "Scans for green rows and triggers actions.",
+  "permissions": ["activeTab", "scripting"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Open Color Scanner"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["content.html", "content.css"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

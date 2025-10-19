@@ -1,0 +1,32 @@
+#color-scanner-container {
+  position: fixed;
+  top: 100px;
+  left: 100px;
+  background-color: white;
+  border: 1px solid black;
+  z-index: 9999;
+  padding: 10px;
+  user-select: none;
+}
+
+#drag-handle {
+  cursor: move;
+  background-color: #f1f1f1;
+  text-align: center;
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+#color-scanner-table {
+  border-collapse: collapse;
+}
+
+#color-scanner-table td {
+  border: 1px solid black;
+  width: 30px;
+  height: 30px;
+}
+
+#action-buttons {
+  margin-top: 10px;
+}
