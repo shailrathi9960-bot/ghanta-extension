@@ -10,11 +10,18 @@
 #color-scanner-container {
   top: 100px;
   left: 100px;
+  background-color: transparent;
+  border: none;
 }
 
-#action-buttons-container {
+#action-button-1-container {
   top: 100px;
   left: 200px;
+}
+
+#action-button-2-container {
+  top: 100px;
+  left: 350px;
 }
 
 .drag-handle {
@@ -33,6 +40,7 @@
   border: 1px solid black;
   width: 30px;
   height: 30px;
+  background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent cells */
 }
 
 #action-buttons {
