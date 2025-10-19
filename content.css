@@ -12,39 +12,67 @@
   left: 100px;
   background-color: transparent;
   border: none;
+  padding: 0;
 }
 
-#action-button-1-container {
+#action-button-1-container,
+#action-button-2-container {
   top: 100px;
   left: 200px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 50%;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ccc;
 }
 
 #action-button-2-container {
   top: 100px;
   left: 350px;
+  width: auto;
+  height: auto;
+  border-radius: 5px;
+  padding: 10px;
 }
 
 .drag-handle {
   cursor: move;
   background-color: #f1f1f1;
   text-align: center;
-  padding: 5px;
-  margin-bottom: 10px;
+  padding: 2px;
+  font-size: 10px;
+  border-radius: 5px 5px 0 0;
 }
 
+#action-button-1-container .drag-handle,
+#action-button-2-container .drag-handle {
+  display: none; /* Hide handles for minimal buttons */
+}
+
+#action-button-1,
+#action-button-2 {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid #999;
+  background-color: #eee;
+  cursor: move;
+}
+
+
 #color-scanner-table {
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 5px;
 }
 
 #color-scanner-table td {
   border: 1px solid black;
   width: 30px;
   height: 30px;
-  background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent cells */
-}
-
-#action-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: 5px;
 }
